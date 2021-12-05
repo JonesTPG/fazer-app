@@ -1,39 +1,23 @@
-import { Card } from "@mui/material";
+import { Stack } from "@mui/material";
 import Image from "next/image";
 
-export default function Home({ textTvImage, id }) {
+export default function Home({ id }) {
   return (
-    <Card
+    <Stack
       sx={{
-        border: (theme) => `1px solid ${theme.palette.common.white}`,
-        borderRadius: "8px",
-        p: 2,
+        justifyContent: "center",
+        alignItems: "center",
+        boxShadow: "0 3px 10px rgb(255 255 255 / 0.2)",
+        p: 0.2,
       }}
+      data-testid="container"
     >
-      <Image src={"mock"} alt="Text TV page" width="600" height="400" />
-    </Card>
+      <Image src={`/api/textTvImage/${id}`} alt="Text TV page" width={800} height={650} />
+    </Stack>
   );
 }
 export async function getStaticProps({ params }) {
-  let data;
-  try {
-    const res = await fetch(`http://localhost:3000/api/textTvImage/${params.id}`, {
-      method: "GET",
-    });
-    const data = await res.json();
-  } catch (error) {
-    data = null;
-  }
-
-  if (!data) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
-  }
-  return { props: { textTvImage: data, id: params.id }, revalidate: 300 };
+  return { props: { id: params.id }, revalidate: 300 };
 }
 
 export async function getStaticPaths() {
