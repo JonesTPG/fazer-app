@@ -12,7 +12,17 @@ function MyApp({ Component, pageProps }) {
       </Head>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Container maxWidth={false} sx={{ maxWidth: 1920 }}>
+        <Container
+          maxWidth={false}
+          sx={{
+            maxWidth: 1920,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100vw",
+            height: "100vh",
+          }}
+        >
           <Component {...pageProps} />
         </Container>
       </ThemeProvider>
