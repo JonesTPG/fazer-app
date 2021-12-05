@@ -1,10 +1,15 @@
 import { useRouter } from "next/router";
 import { Button, Stack, Card } from "@mui/material";
+import { useState } from "react";
 
 export default function Home({ min, max }) {
   const router = useRouter();
+  const [isClicked, setIsClicked] = useState(false);
   return (
-    <Stack sx={{ width: "100vw", height: "100vh", alignItems: "center", justifyContent: "center" }}>
+    <Stack
+      sx={{ width: "100vw", height: "100vh", alignItems: "center", justifyContent: "center" }}
+      data-testid="container"
+    >
       <Card
         sx={{
           border: (theme) => `1px solid ${theme.palette.common.white}`,
@@ -19,7 +24,12 @@ export default function Home({ min, max }) {
       >
         <Button
           variant="contained"
-          onClick={() => router.push(`/${Math.floor(Math.random() * max - min) + min}`)}
+          disabled={isClicked}
+          data-testid={`button${isClicked ? "-disabled" : ""}`}
+          onClick={() => {
+            setIsClicked(true);
+            router.push(`/${Math.floor(Math.random() * max - min) + min}`);
+          }}
         >
           Surprise me!
         </Button>
