@@ -5,8 +5,7 @@ export default async (req, res) => {
   const APP_CREDENTIALS = process.env.API_CREDENTIALS;
   const { pageId } = req.query;
 
-  const url =
-    API_URL + "teletext/images/" + pageId + "/1.png?" + APP_CREDENTIALS;
+  const url = API_URL + "teletext/images/" + pageId + "/1.png?" + APP_CREDENTIALS;
 
   console.log(url);
 

@@ -1,5 +1,5 @@
+import { Button, Card, Stack } from "@mui/material";
 import { useRouter } from "next/router";
-import { Button, Stack, Card } from "@mui/material";
 import { useState } from "react";
 
 export default function Home({ min, max }) {

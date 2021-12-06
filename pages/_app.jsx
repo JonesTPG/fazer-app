@@ -1,7 +1,7 @@
-import Head from "next/head";
+import { Container, CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/system";
-import theme from "../theme";
-import { CssBaseline, Container } from "@mui/material";
+import Head from "next/head";
+import theme from "../src/theme";
 
 function MyApp({ Component, pageProps }) {
   return (
