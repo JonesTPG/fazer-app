@@ -1,7 +1,7 @@
-import { Button, Card, Stack } from "@mui/material";
-import { useRouter } from "next/router";
+import { Button, Stack } from "@mui/material";
+import Link from "next/link";
 import { useState } from "react";
-
+import SearchForm from "../src/components/SearchForm";
 import TextTvPageForm from "../src/components/TextTvPageForm";
 
 export default function Home({ min, max }) {
@@ -11,36 +11,24 @@ export default function Home({ min, max }) {
     <Stack
       sx={{ width: "100vw", height: "100vh", alignItems: "center", justifyContent: "center" }}
       data-testid="container"
+      spacing={2}
     >
-      <Card
-        sx={{
-          border: (theme) => `1px solid ${theme.palette.common.white}`,
-          borderRadius: "8px",
-          p: 2,
-          minHeight: 400,
-          minWidth: 300,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
+      <Link href={`/${textTvPageId}`} passHref>
         <Button
           variant="contained"
           disabled={isClicked}
           data-testid={`button${isClicked ? "-disabled" : ""}`}
-          onClick={() => {
-            setIsClicked(true);
-            router.push(`/${Math.floor(Math.random() * max - min) + min}`);
-          }}
+          onClick={() => setIsClicked(true)}
         >
           Surprise me!
         </Button>
-        <TextTvPageForm></TextTvPageForm>
-      </Card>
+      </Link>
+      <SearchForm />
+      <TextTvPageForm />
     </Stack>
   );
 }
 
 export const getStaticProps = async () => {
-  return { props: { min: 100, max: 800 } };
+  return { props: { textTvPageId: Math.floor(Math.random() * (800 - 100)) + 100 } };
 };
