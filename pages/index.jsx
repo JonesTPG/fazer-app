@@ -1,10 +1,11 @@
 import { Button, Stack } from "@mui/material";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import SearchForm from "../src/components/SearchForm";
 import TextTvPageForm from "../src/components/TextTvPageForm";
 
-export default function Home({ min, max }) {
+export default function Home({ textTvPageId }) {
   const router = useRouter();
   const [isClicked, setIsClicked] = useState(false);
   return (
