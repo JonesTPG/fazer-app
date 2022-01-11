@@ -2,6 +2,8 @@ import { Button, Card, Stack } from "@mui/material";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
+import TextTvPageForm from "../src/components/TextTvPageForm";
+
 export default function Home({ min, max }) {
   const router = useRouter();
   const [isClicked, setIsClicked] = useState(false);
@@ -33,6 +35,7 @@ export default function Home({ min, max }) {
         >
           Surprise me!
         </Button>
+        <TextTvPageForm></TextTvPageForm>
       </Card>
     </Stack>
   );

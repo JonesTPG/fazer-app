@@ -1,4 +1,4 @@
-import { searchTextTvPages } from "../../lib/redis";
+import { searchTextTvPages } from "../../src/lib/redis";
 
 export default async function handler(req, res) {
   const q = req.query.q;
