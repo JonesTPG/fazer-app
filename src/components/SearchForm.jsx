@@ -1,6 +1,7 @@
+import { Input, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 
-export default function CarForm() {
+export default function SearchForm() {
   const [hits, setHits] = useState([]);
 
   const search = async (event) => {
@@ -8,36 +9,34 @@ export default function CarForm() {
 
     if (q.length > 2) {
       const params = new URLSearchParams({ q });
-
-      const res = await fetch("/api/search?" + params);
-
+      const res = await fetch(`/api/search?${params}`);
       const result = await res.json();
       console.log(result);
-      setHits(result["cars"]);
+      setHits([]);
     }
   };
 
   return (
-    <div>
-      <input onChange={search} type="text" placeholder="search cars..." className="form-control" />
+    <Stack>
+      <Input
+        onChange={search}
+        placeholder="search..."
+        sx={{
+          borderRadius: 1,
+          border: (theme) => `2px solid ${theme.palette.primary.main}`,
+          color: "common.white",
+          pl: 1,
+        }}
+        disableUnderline
+      />
 
-      <ul className="list-group">
-        {hits.map((hit) => (
-          <li
-            className="list-group-item d-flex justify-content-between align-items-start"
-            key={hit.entityId}
-          >
-            <img width="50px" src={hit.image} />
-
-            <div className="ms-2 me-auto">
-              <div className="fw-bold">
-                {hit.make} {hit.model}
-              </div>
-              {hit.description}
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
+      {!!hits.length && (
+        <Stack spacing={2}>
+          {hits.map((_, index) => (
+            <Typography key={index}>HIT</Typography>
+          ))}
+        </Stack>
+      )}
+    </Stack>
   );
 }
