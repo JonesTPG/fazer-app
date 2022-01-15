@@ -19,7 +19,7 @@ export default function TextTvPageForm() {
   };
 
   const handleSubmit = async () => {
-    if (!pageNumber || !nickname) {
+    if (!values.pageNumber || !values.nickname) {
       return null;
     }
 
