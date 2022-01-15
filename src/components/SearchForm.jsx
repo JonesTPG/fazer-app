@@ -1,4 +1,4 @@
-import { Input, Stack, Typography } from "@mui/material";
+import { OutlinedInput, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 
 export default function SearchForm() {
@@ -11,29 +11,27 @@ export default function SearchForm() {
       const params = new URLSearchParams({ q });
       const res = await fetch(`/api/search?${params}`);
       const result = await res.json();
-      console.log(result);
-      setHits([]);
+      setHits([result?.result?.id]);
     }
   };
 
   return (
     <Stack>
-      <Input
+      <OutlinedInput
         onChange={search}
         placeholder="search..."
         sx={{
           borderRadius: 1,
-          border: (theme) => `2px solid ${theme.palette.primary.main}`,
           color: "common.white",
-          pl: 1,
+          bgcolor: "background.paper",
         }}
-        disableUnderline
+        inputProps={{ sx: { p: 1.5 } }}
       />
 
       {!!hits.length && (
         <Stack spacing={2}>
-          {hits.map((_, index) => (
-            <Typography key={index}>HIT</Typography>
+          {hits.map((item, index) => (
+            <Typography key={index}>{item}</Typography>
           ))}
         </Stack>
       )}
