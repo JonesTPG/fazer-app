@@ -1,11 +1,13 @@
-import { OutlinedInput, Stack, Typography, Link as MUILink } from "@mui/material";
+import CancelIcon from "@mui/icons-material/Cancel";
+import { IconButton, Link as MUILink, OutlinedInput, Stack, Typography } from "@mui/material";
 import Link from "next/link";
-import { useState } from "react";
+import React, { useState } from "react";
 
 export default function SearchForm() {
-  const [hits, setHits] = useState([]);
+  const [hits, setHits] = useState<any[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const search = async (event) => {
+  const search = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const q = event.target.value;
 
     if (q.length > 2) {
@@ -14,19 +16,22 @@ export default function SearchForm() {
       const result = await res.json();
       setHits(result?.textTvPages);
     }
+    setSearchTerm(q);
   };
 
   return (
     <Stack>
       <OutlinedInput
+        value={searchTerm}
         onChange={search}
         placeholder="search..."
-        sx={{
-          borderRadius: 1,
-          color: "common.white",
-          bgcolor: "background.paper",
-        }}
-        inputProps={{ sx: { p: 1.5 } }}
+        endAdornment={
+          searchTerm ? (
+            <IconButton onClick={() => setSearchTerm("")}>
+              <CancelIcon />
+            </IconButton>
+          ) : undefined
+        }
       />
 
       {!!hits.length && (

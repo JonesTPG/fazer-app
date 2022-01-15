@@ -1,4 +1,5 @@
-import { Client, Entity, Schema, Repository } from "redis-om";
+import { Client, Entity, EntityCreationData, Repository, Schema } from "redis-om";
+import { FavoritePageInput } from "../components/TextTvPageForm";
 
 const client = new Client();
 
@@ -21,32 +22,31 @@ let schema = new Schema(
   },
 );
 
-export async function createFavoriteTextTvPage(data) {
+export async function createFavoriteTextTvPage(data: FavoritePageInput) {
   await connect();
-
   const repository = new Repository(schema, client);
 
-  const favoriteTextTvPage = repository.createEntity(data);
-
+  const favoriteTextTvPage = repository.createEntity(data as unknown as EntityCreationData);
   const id = await repository.save(favoriteTextTvPage);
+
   return id;
 }
 
-export async function getFavoriteTextTvPage(id) {
+export async function getFavoriteTextTvPage(id: string) {
   await connect();
-
   const repository = new Repository(schema, client);
+
   return repository.fetch(id);
 }
 
 export async function createIndex() {
   await connect();
-
   const repository = new Repository(schema, client);
+
   await repository.createIndex();
 }
 
-export async function searchFavoritePages(q) {
+export async function searchFavoritePages(q: string) {
   await connect();
 
   const repository = new Repository(schema, client);
