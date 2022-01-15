@@ -1,4 +1,5 @@
-import { OutlinedInput, Stack, Typography } from "@mui/material";
+import { OutlinedInput, Stack, Typography, Link as MUILink } from "@mui/material";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function SearchForm() {
@@ -11,7 +12,7 @@ export default function SearchForm() {
       const params = new URLSearchParams({ q });
       const res = await fetch(`/api/search?${params}`);
       const result = await res.json();
-      setHits([result?.result?.id]);
+      setHits(result?.textTvPages);
     }
   };
 
@@ -31,7 +32,11 @@ export default function SearchForm() {
       {!!hits.length && (
         <Stack spacing={2}>
           {hits.map((item, index) => (
-            <Typography key={index}>{item}</Typography>
+            <Link passHref href={`/${item.pageNumber}`} key={index}>
+              <MUILink>
+                <Typography>{item.nickname}</Typography>
+              </MUILink>
+            </Link>
           ))}
         </Stack>
       )}
