@@ -1,10 +1,10 @@
 import { Button, Stack } from "@mui/material";
 import Link from "next/link";
-import { useState } from "react";
+import React, { FC, useState } from "react";
 import SearchForm from "../src/components/SearchForm";
 import TextTvPageForm from "../src/components/TextTvPageForm";
 
-export default function Home({ textTvPageId }) {
+export const Home: FC<{ textTvPageId: string }> = ({ textTvPageId }) => {
   const [isClicked, setIsClicked] = useState(false);
   return (
     <Stack
@@ -14,20 +14,15 @@ export default function Home({ textTvPageId }) {
     >
       <SearchForm />
       <Link href={`/${textTvPageId}`} passHref>
-        <Button
-          variant="contained"
-          disabled={isClicked}
-          data-testid={`button${isClicked ? "-disabled" : ""}`}
-          onClick={() => setIsClicked(true)}
-          sx={{ p: 1.5 }}
-        >
+        <Button variant="contained" disabled={isClicked} onClick={() => setIsClicked(true)}>
           Surprise me!
         </Button>
       </Link>
       <TextTvPageForm />
     </Stack>
   );
-}
+};
+export default Home;
 
 export const getStaticProps = async () => {
   return { props: { textTvPageId: Math.floor(Math.random() * (800 - 100)) + 100 } };

@@ -7,16 +7,28 @@ import {
   OutlinedInput,
   Stack,
 } from "@mui/material";
+import * as React from "react";
 import { useState } from "react";
 
+export interface FavoritePageInput {
+  pageNumber: string;
+  nickname: string;
+  reason: string;
+}
+
 export default function TextTvPageForm() {
-  const [values, setValues] = useState({ pageNumber: "", nickname: "", reason: "" });
+  const [values, setValues] = useState<FavoritePageInput>({
+    pageNumber: "",
+    nickname: "",
+    reason: "",
+  });
   const [open, setOpen] = useState(false);
 
-  const handleChange = (prop) => (event) => {
-    event.preventDefault();
-    setValues((old) => ({ ...old, [prop]: event.target.value }));
-  };
+  const handleChange =
+    (prop: keyof FavoritePageInput) => (event: React.ChangeEvent<HTMLInputElement>) => {
+      event.preventDefault();
+      setValues((old) => ({ ...old, [prop]: event.target.value }));
+    };
 
   const handleSubmit = async () => {
     if (!values.pageNumber || !values.nickname) {
@@ -47,53 +59,31 @@ export default function TextTvPageForm() {
 
   return (
     <>
-      <Button variant="contained" onClick={handleClickOpen}>
-        Create a new text-tv page
-      </Button>
+      <Button onClick={handleClickOpen}>Save your favorite page!</Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Create a new text-tv page</DialogTitle>
+        <DialogTitle>Add favorites</DialogTitle>
         <DialogContent>
           <Stack spacing={2}>
             <OutlinedInput
-              sx={{
-                borderRadius: 1,
-                color: "common.white",
-                bgcolor: "background.paper",
-              }}
               placeholder="Page number*"
               value={values.pageNumber}
               onChange={handleChange("pageNumber")}
-              inputProps={{ sx: { p: 1.5 } }}
             />
             <OutlinedInput
-              sx={{
-                borderRadius: 1,
-                color: "common.white",
-                bgcolor: "background.paper",
-              }}
               placeholder="Nickname*"
               value={values.nickname}
               onChange={handleChange("nickname")}
-              inputProps={{ sx: { p: 1.5 } }}
             />
             <OutlinedInput
-              sx={{
-                borderRadius: 1,
-                color: "common.white",
-                bgcolor: "background.paper",
-              }}
               placeholder="Reason"
               value={values.reason}
               onChange={handleChange("reason")}
-              inputProps={{ sx: { p: 1.5 } }}
             />
           </Stack>
         </DialogContent>
         <DialogActions>
-          <Button variant="contained" onClick={() => handleSubmit()}>
-            Create
-          </Button>
-          <Button onClick={handleClose} color="secondary">
+          <Button onClick={() => handleSubmit()}>Save</Button>
+          <Button onClick={handleClose} variant="text" color="secondary">
             Cancel
           </Button>
         </DialogActions>

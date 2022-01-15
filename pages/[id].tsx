@@ -1,11 +1,12 @@
-import { Stack, Fab, Typography } from "@mui/material";
-import ArrowCircleLeftTwoToneIcon from "@mui/icons-material/ArrowCircleLeftTwoTone";
-import ArrowCircleRightTwoToneIcon from "@mui/icons-material/ArrowCircleRightTwoTone";
-
+import ArrowLeftIcon from "@mui/icons-material/ArrowBackRounded";
+import ArrowRightIcon from "@mui/icons-material/ArrowForwardRounded";
+import { Fab, Stack, Typography } from "@mui/material";
+import { GetStaticPaths, GetStaticProps } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import React, { FC } from "react";
 
-export default function Home({ id }) {
+export const TextTVPage: FC<{ id: string }> = ({ id }) => {
   const router = useRouter();
   return (
     <Stack
@@ -16,13 +17,8 @@ export default function Home({ id }) {
       direction="row"
       spacing={4}
     >
-      <Fab
-        color="secondary"
-        aria-label="add"
-        size="large"
-        onClick={() => router.push(`/${id - 1}`)}
-      >
-        <ArrowCircleLeftTwoToneIcon />
+      <Fab size="large" onClick={() => router.push(`/${Number(id) - 1}`)}>
+        <ArrowLeftIcon />
       </Fab>
       <Stack
         sx={{
@@ -43,26 +39,22 @@ export default function Home({ id }) {
         </Typography>
         <Image src={`/api/textTvImage/${id}`} alt="Text TV page" width={800} height={650} />
       </Stack>
-      <Fab
-        color="secondary"
-        aria-label="add"
-        size="large"
-        onClick={() => router.push(`/${Number(id) + 1}`)}
-      >
-        <ArrowCircleRightTwoToneIcon />
+      <Fab size="large" onClick={() => router.push(`/${Number(id) + 1}`)}>
+        <ArrowRightIcon />
       </Fab>
     </Stack>
   );
-}
+};
+export default TextTVPage;
 
-export async function getStaticProps({ params }) {
-  return { props: { id: params.id }, revalidate: 300 };
-}
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  return { props: { id: params?.id || null }, revalidate: 300 };
+};
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = () => {
   const paths = Array.from(Array(10).keys()).map((i) => ({ params: { id: `${i + 100}` } }));
   return {
     paths,
     fallback: "blocking",
   };
-}
+};
