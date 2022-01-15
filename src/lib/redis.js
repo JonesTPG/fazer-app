@@ -8,9 +8,9 @@ async function connect() {
   }
 }
 
-class TextTvPage extends Entity {}
+class FavoriteTextTvPage extends Entity {}
 let schema = new Schema(
-  TextTvPage,
+  FavoriteTextTvPage,
   {
     nickname: { type: "string" },
     reason: { type: "string", textSearch: true },
@@ -21,18 +21,18 @@ let schema = new Schema(
   },
 );
 
-export async function createTextTvPage(data) {
+export async function createFavoriteTextTvPage(data) {
   await connect();
 
   const repository = new Repository(schema, client);
 
-  const textTvPage = repository.createEntity(data);
+  const favoriteTextTvPage = repository.createEntity(data);
 
-  const id = await repository.save(textTvPage);
+  const id = await repository.save(favoriteTextTvPage);
   return id;
 }
 
-export async function getTextTvPage(id) {
+export async function getFavoriteTextTvPage(id) {
   await connect();
 
   const repository = new Repository(schema, client);
