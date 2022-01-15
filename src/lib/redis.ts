@@ -1,5 +1,4 @@
 import { Client, Entity, EntityCreationData, Repository, Schema } from "redis-om";
-import { FavoritePageInput } from "../components/TextTvPageForm";
 
 const client = new Client();
 
@@ -22,11 +21,11 @@ let schema = new Schema(
   },
 );
 
-export async function createFavoriteTextTvPage(data: FavoritePageInput) {
+export async function createFavoriteTextTvPage(data: unknown) {
   await connect();
   const repository = new Repository(schema, client);
 
-  const favoriteTextTvPage = repository.createEntity(data as unknown as EntityCreationData);
+  const favoriteTextTvPage = repository.createEntity(data as EntityCreationData);
   const id = await repository.save(favoriteTextTvPage);
 
   return id;
