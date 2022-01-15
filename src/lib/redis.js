@@ -12,8 +12,8 @@ class TextTvPage extends Entity {}
 let schema = new Schema(
   TextTvPage,
   {
-    header: { type: "string" },
-    content: { type: "string", textSearch: true },
+    nickname: { type: "string" },
+    reason: { type: "string", textSearch: true },
     pageNumber: { type: "string" },
   },
   {
@@ -46,18 +46,18 @@ export async function createIndex() {
   await repository.createIndex();
 }
 
-export async function searchTextTvPages(q) {
+export async function searchFavoritePages(q) {
   await connect();
 
   const repository = new Repository(schema, client);
 
   const textTvPages = await repository
     .search()
-    .where("header")
+    .where("nickname")
     .eq(q)
     .or("pageNumber")
     .eq(q)
-    .or("content")
+    .or("reason")
     .matches(q)
     .return.all();
 
