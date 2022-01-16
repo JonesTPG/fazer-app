@@ -1,8 +1,8 @@
+import SearchForm from "@components/SearchForm";
+import TextTvPageForm from "@components/TextTvPageForm";
 import { Button, Stack } from "@mui/material";
 import Link from "next/link";
 import React, { FC, useState } from "react";
-import SearchForm from "../src/components/SearchForm";
-import TextTvPageForm from "../src/components/TextTvPageForm";
 
 export const Home: FC<{ textTvPageId: string }> = ({ textTvPageId }) => {
   const [isClicked, setIsClicked] = useState(false);

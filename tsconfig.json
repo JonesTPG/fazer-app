@@ -5,10 +5,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "noImplicitAny": true,
-    "lib": [
-      "es6",
-      "dom"
-    ],
+    "lib": ["es6", "dom"],
     "noImplicitThis": true,
     "strictNullChecks": true,
     "removeComments": true,
@@ -25,14 +22,15 @@
     "incremental": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": ["src/components/*"],
+      "@lib/*": ["src/lib/*"],
+      "@pages/*": ["pages/*"],
+      "@theme": ["src/theme"]
+    }
   },
-  "include": [
-    "src/**/*",
-    "pages/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "**/*.spec.ts"
-  ]
+  "include": ["src/**/*", "pages/**/*"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
 }

@@ -1,9 +1,9 @@
 import { Container, CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/system";
+import theme from "@theme";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import React from "react";
-import theme from "../src/theme";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
