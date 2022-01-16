@@ -1,5 +1,5 @@
+import { searchFavoritePages } from "@lib/redis";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { searchFavoritePages } from "../../src/lib/redis";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const q = req.query.q;
