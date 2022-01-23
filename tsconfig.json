@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "strict": true,
     "module": "esnext",
     "moduleResolution": "node",
@@ -14,7 +14,7 @@
     "allowSyntheticDefaultImports": true,
     "outDir": "dist",
     "rootDir": ".",
-    "target": "es5",
+    "target": "esnext",
     "allowJs": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
