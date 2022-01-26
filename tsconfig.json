@@ -1,11 +1,14 @@
 {
   "compilerOptions": {
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     "strict": true,
     "module": "esnext",
     "moduleResolution": "node",
     "noImplicitAny": true,
-    "lib": ["es6", "dom"],
+    "lib": [
+      "es6",
+      "dom"
+    ],
     "noImplicitThis": true,
     "strictNullChecks": true,
     "removeComments": true,
@@ -25,12 +28,26 @@
     "isolatedModules": true,
     "baseUrl": ".",
     "paths": {
-      "@components/*": ["src/components/*"],
-      "@lib/*": ["src/lib/*"],
-      "@pages/*": ["pages/*"],
-      "@theme": ["src/theme"]
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@lib/*": [
+        "src/lib/*"
+      ],
+      "@pages/*": [
+        "pages/*"
+      ],
+      "@theme": [
+        "src/theme"
+      ]
     }
   },
-  "include": ["src/**/*", "pages/**/*"],
-  "exclude": ["node_modules", "**/*.spec.ts"]
+  "include": [
+    "src/**/*",
+    "pages/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
 }

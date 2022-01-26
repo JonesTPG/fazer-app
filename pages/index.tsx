@@ -13,6 +13,11 @@ export const Home: FC<{ textTvPageId: string }> = ({ textTvPageId }) => {
       spacing={2}
     >
       <SearchForm />
+      <Link href={`/100`} passHref>
+        <Button variant="contained" disabled={isClicked} onClick={() => setIsClicked(true)}>
+          First page!
+        </Button>
+      </Link>
       <Link href={`/${textTvPageId}`} passHref>
         <Button variant="contained" disabled={isClicked} onClick={() => setIsClicked(true)}>
           Surprise me!
