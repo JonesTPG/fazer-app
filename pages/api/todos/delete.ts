@@ -4,11 +4,12 @@ import requestIp from "request-ip";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const clientIp = requestIp.getClientIp(req);
-  if (!clientIp || !req.body?.id) {
+  const { todos } = JSON.parse(req.body);
+  if (!clientIp || !todos) {
     res.status(400).end();
   }
 
-  const data = await deleteTodos(clientIp as string, req.body.id);
+  const data = await deleteTodos(clientIp as string, todos);
 
   res.status(200).json({ data });
 };

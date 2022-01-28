@@ -22,7 +22,7 @@ export interface TodoModel {
   entityId: string;
   username?: string;
   ipAddress?: string;
-  todos?: TodoType[];
+  todos?: string[];
 }
 
 export interface UserTodoData {
@@ -30,18 +30,12 @@ export interface UserTodoData {
   todos?: TodoType[];
 }
 
-export async function readTodos(ip: string): Promise<UserTodoData | null> {
+export async function readTodos(ip: string): Promise<TodoModel[] | null> {
   await connect();
   const repository = new Repository(todoSchema, client);
-  console.log(ip);
-  //const res = (await repository.fetch(ip)).toJSON() as TodoModel;
   const res = await repository.search().where("ipAddress").eq(ip).return.all();
-  console.log(res);
-  // if (!res.username) {
-  //   return null;
-  // }
 
-  return { todos: res.todos || [], username: res.username };
+  return res.map((item) => item.toJSON() as TodoModel) || [];
 }
 
 export async function createTodos(ip: string, username: string): Promise<string | null> {
@@ -50,16 +44,16 @@ export async function createTodos(ip: string, username: string): Promise<string 
   }
   await connect();
   const repository = new Repository(todoSchema, client);
+  const matches = await repository.search().where("ipAddress").eq(ip).return.all();
+
+  if (!!matches.length) {
+    return null;
+  }
 
   const profile = repository.createEntity({
     ipAddress: ip,
     username,
-    todos: [
-      JSON.stringify({
-        id: "1",
-        content: "Testing",
-      }),
-    ],
+    todos: [],
   });
   const id = await repository.save(profile);
 
@@ -72,14 +66,14 @@ export async function updateTodos(ip: string, todos: TodoType[]): Promise<string
   }
   await connect();
   const repository = new Repository(todoSchema, client);
+  const matches = await repository.search().where("ipAddress").eq(ip).return.all();
 
-  const res = (await repository.fetch(ip)).toJSON() as TodoModel;
-
-  if (!res.username) {
+  if (matches.length !== 1) {
     return null;
   }
+  const data = matches[0];
 
-  const id = await repository.save({ ...res, todos } as unknown as TodoSchema);
+  const id = await repository.save({ ...data, todos } as unknown as TodoSchema);
 
   return id || null;
 }
@@ -90,14 +84,14 @@ export async function deleteTodos(ip: string, todos: TodoType[]): Promise<string
   }
   await connect();
   const repository = new Repository(todoSchema, client);
+  const matches = await repository.search().where("ipAddress").eq(ip).return.all();
 
-  const res = (await repository.fetch(ip)).toJSON() as TodoModel;
-
-  if (!res.username) {
+  if (matches.length !== 1) {
     return null;
   }
+  const data = matches[0];
 
-  const id = await repository.save({ ...res, todos } as unknown as TodoSchema);
+  const id = await repository.save({ ...data, todos } as unknown as TodoSchema);
 
   return id || null;
 }

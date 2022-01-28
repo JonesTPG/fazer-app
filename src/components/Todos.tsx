@@ -1,24 +1,19 @@
 import { TodoType, UserTodoData } from "@lib/todos";
-import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
-import { Box, Fab, IconButton, Stack, Typography } from "@mui/material";
-import React from "react";
+import { Box, IconButton, Stack, Typography } from "@mui/material";
+import React, { useState } from "react";
+import NewTodoModal from "./NewTodoModal";
 
 type Props = {
   data: UserTodoData;
 };
 
 const Todos = ({ data }: Props) => {
-  const todos: TodoType[] = data.todos || [];
-  //    || [
-  //     { id: "1", content: "Add TypeScript!" },
-  //     { id: "2", content: "Add TypeScript!" },
-  //     { id: "3", content: "Add TypeScript!" },
-  //   ];
+  const [todos, setTodos] = useState<TodoType[]>(data.todos || []);
   return (
     <Stack justifyContent={"center"} spacing={2}>
-      {!todos.length ? (
+      {!!todos.length ? (
         <>
           <Typography variant="h5" textAlign="center" fontWeight={400}>
             {`Welcome back ${data.username}!`}
@@ -44,7 +39,7 @@ const Todos = ({ data }: Props) => {
                 <IconButton onClick={() => console.log("edit", { id })}>
                   <EditRoundedIcon />
                 </IconButton>
-                <IconButton onClick={() => console.log("delete", { id })}>
+                <IconButton onClick={() => setTodos((old) => old.filter((item) => item.id !== id))}>
                   <DeleteRoundedIcon />
                 </IconButton>
               </Box>
@@ -52,22 +47,10 @@ const Todos = ({ data }: Props) => {
           ))}
         </>
       ) : (
-        <Stack justifyContent="center" spacing={2}>
-          <Typography variant="h5" textAlign="center" fontWeight={400}>
-            {`Welcome ${data.username}!`}
-          </Typography>
-          <Typography
-            variant="h5"
-            textAlign="center"
-            fontWeight={400}
-            sx={{ pt: { xs: 3, sm: 20 } }}
-          >
-            Create your first TODO
-          </Typography>
-          <Fab sx={{ alignSelf: "center" }} onClick={() => console.log("add")}>
-            <AddRoundedIcon />
-          </Fab>
-        </Stack>
+        <NewTodoModal
+          addTodo={(content) => setTodos((old) => [...old, { id: `${old.length}`, content }])}
+          name={data.username}
+        />
       )}
     </Stack>
   );

@@ -44,7 +44,6 @@ export default function TextTvPageForm() {
     });
 
     const result = await res.json();
-    console.log("Saved: ", { result });
     setOpen(false);
     setValues({ pageNumber: "", nickname: "", reason: "" });
   };

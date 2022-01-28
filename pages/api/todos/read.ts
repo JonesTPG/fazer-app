@@ -9,7 +9,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     return;
   }
 
-  const data = await readTodos(clientIp as string);
-  console.log(data);
-  res.status(200).json({ data });
+  const data = (await readTodos(clientIp as string)) || [];
+
+  res.status(200).json({
+    data: data[0] || null,
+  });
 };
