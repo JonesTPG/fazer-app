@@ -49,7 +49,16 @@ export async function createTodos(ip: string, username: string): Promise<string 
   await connect();
   const repository = new Repository(todoSchema, client);
 
-  const profile = repository.createEntity({ ipAddress: ip, username, todos: [] });
+  const profile = repository.createEntity({
+    ipAddress: ip,
+    username,
+    todos: [
+      JSON.stringify({
+        id: "1",
+        content: "Testing",
+      }),
+    ],
+  });
   const id = await repository.save(profile);
 
   return id || null;
@@ -68,7 +77,7 @@ export async function updateTodos(ip: string, todos: TodoType[]): Promise<string
     return null;
   }
 
-  const id = await repository.save({ ...res, todos } as TodoSchema);
+  const id = await repository.save({ ...res, todos } as unknown as TodoSchema);
 
   return id || null;
 }
@@ -86,7 +95,7 @@ export async function deleteTodos(ip: string, todos: TodoType[]): Promise<string
     return null;
   }
 
-  const id = await repository.save({ ...res, todos } as TodoSchema);
+  const id = await repository.save({ ...res, todos } as unknown as TodoSchema);
 
   return id || null;
 }

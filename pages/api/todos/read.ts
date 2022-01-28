@@ -1,4 +1,4 @@
-import { readTodos } from "@lib/redis";
+import { readTodos } from "@lib/todos";
 import { NextApiRequest, NextApiResponse } from "next";
 import requestIp from "request-ip";
 

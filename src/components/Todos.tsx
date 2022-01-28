@@ -1,4 +1,4 @@
-import { TodoType, UserTodoData } from "@lib/redis";
+import { TodoType, UserTodoData } from "@lib/todos";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
