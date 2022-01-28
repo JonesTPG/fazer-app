@@ -33,11 +33,13 @@ export interface UserTodoData {
 export async function readTodos(ip: string): Promise<UserTodoData | null> {
   await connect();
   const repository = new Repository(todoSchema, client);
-  const res = (await repository.fetch(ip)).toJSON() as TodoModel;
-
-  if (!res.username) {
-    return null;
-  }
+  console.log(ip);
+  //const res = (await repository.fetch(ip)).toJSON() as TodoModel;
+  const res = await repository.search().where("ipAddress").eq(ip).return.all();
+  console.log(res);
+  // if (!res.username) {
+  //   return null;
+  // }
 
   return { todos: res.todos || [], username: res.username };
 }
@@ -98,4 +100,11 @@ export async function deleteTodos(ip: string, todos: TodoType[]): Promise<string
   const id = await repository.save({ ...res, todos } as unknown as TodoSchema);
 
   return id || null;
+}
+
+export async function createTodoIndex() {
+  await connect();
+  const repository = new Repository(todoSchema, client);
+
+  await repository.createIndex();
 }

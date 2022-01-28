@@ -6,9 +6,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const clientIp = requestIp.getClientIp(req);
   if (!clientIp) {
     res.status(400).end();
+    return;
   }
 
   const data = await readTodos(clientIp as string);
-
+  console.log(data);
   res.status(200).json({ data });
 };

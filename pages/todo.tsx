@@ -12,6 +12,7 @@ const TodoPage = () => {
   useEffect(() => {
     const getData = async (): Promise<UserTodoData | null> => {
       const res = await fetch("/api/todos/read");
+      //console.log(await res.json());
       if (res.status === 400) {
         return null;
       }
