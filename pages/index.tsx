@@ -1,3 +1,4 @@
+import ChatBot from "@components/ChatBot";
 import SearchForm from "@components/SearchForm";
 import TextTvPageForm from "@components/TextTvPageForm";
 import { Button, Stack } from "@mui/material";
@@ -24,6 +25,7 @@ export const Home: FC<{ textTvPageId: string }> = ({ textTvPageId }) => {
         </Button>
       </Link>
       <TextTvPageForm />
+      <ChatBot />
     </Stack>
   );
 };
