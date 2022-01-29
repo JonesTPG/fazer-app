@@ -45,6 +45,9 @@ const Todos = ({ data }: Props) => {
               </Box>
             </Stack>
           ))}
+          <NewTodoModal
+            addTodo={(content) => setTodos((old) => [...old, { id: `${old.length}`, content }])}
+          />
         </>
       ) : (
         <NewTodoModal
