@@ -30,12 +30,14 @@ export interface UserTodoData {
   todos?: TodoType[];
 }
 
-export async function readTodos(ip: string): Promise<TodoModel[] | null> {
+export async function readTodos(ip: string): Promise<TodoModel | null> {
   await connect();
   const repository = new Repository(todoSchema, client);
   const res = await repository.search().where("ipAddress").eq(ip).return.all();
 
-  return res.map((item) => item.toJSON() as TodoModel) || [];
+  const data = res[0];
+
+  return !!data ? (data.toJSON() as TodoModel) : null;
 }
 
 export async function createTodos(ip: string, username: string): Promise<string | null> {
@@ -55,6 +57,7 @@ export async function createTodos(ip: string, username: string): Promise<string 
     username,
     todos: [],
   });
+  console.log("created profile: ", { profile });
   const id = await repository.save(profile);
 
   return id || null;
@@ -73,7 +76,14 @@ export async function updateTodos(ip: string, todos: TodoType[]): Promise<string
   }
   const data = matches[0];
 
-  const id = await repository.save({ ...data, todos } as unknown as TodoSchema);
+  const newData = {
+    ...data,
+    entityData: { ...data.entityData, todos },
+  } as unknown as TodoSchema;
+
+  console.log("found data: ", { data }, "new data: ", { newData });
+
+  const id = await repository.save(newData as unknown as TodoSchema);
 
   return id || null;
 }
